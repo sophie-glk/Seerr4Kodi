@@ -15,6 +15,7 @@ def browse_menu(media_type, id, jellyseer_client, sonarr_client, settings, addon
         return
     selected = xbmcgui.Dialog().select(name, ["Request", "Browse"])
     if selected == -1:
+        handle_empty_directory(addon_handle)
         return
     elif selected == 0:
         do_request(media_type, id, settings, jellyseer_client, addon_handle , sonarr_client, season, episode)
