@@ -43,6 +43,7 @@ class TraktClient:
 
     def refresh_access_token(self) -> None:
      max_tries = 3
+     wait_time = 1000
      current_try = 0
      while current_try <= max_tries:
       current_try = current_try+1 
@@ -60,21 +61,25 @@ class TraktClient:
         response.raise_for_status()
       except requests.ConnectionError as e:
             if current_try < max_tries:
+                xbmc.sleep(wait_time)
                 continue
             self._error_notification("A Connection error occurred.", e)
             raise e
       except requests.TooManyRedirects as e:
             if current_try < max_tries:
+                xbmc.sleep(wait_time)
                 continue
             self._error_notification("Too many redirects.", e)
             raise e
       except requests.Timeout as e:
             if current_try < max_tries:
+                xbmc.sleep(wait_time)
                 continue
             self._error_notification("The request timed out.", e)
             raise e
       except requests.HTTPError as e:
              if current_try < max_tries:
+                xbmc.sleep(wait_time)
                 continue
              self._error_notification("Could not renew access token, please reauthorize Trakt.", e)
              raise e

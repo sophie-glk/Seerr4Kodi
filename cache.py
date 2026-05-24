@@ -59,7 +59,7 @@ def set_cached(key, data,  duration=None):
 def clear_cache():
     global cache_id
     window = xbmcgui.Window(10000)
-    window.setProperty(cache_id, {})
+    window.setProperty(cache_id, json.dumps({}))
 
 def clean_cache():
     window = xbmcgui.Window(10000)
